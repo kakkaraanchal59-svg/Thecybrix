@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Cybrix — Digital Marketing Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --deep:    #1a1630;
+    --darker:  #26215C;
+    --mid:     #534AB7;
+    --bright:  #7F77DD;
+    --soft:    #AFA9EC;
+    --pale:    #EEEDFE;
+    --white:   #FFFFFF;
+    --gray:    #888780;
+    --card-bg: #211d4a;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--deep); color:var(--white); overflow-x:hidden; cursor:none; }
+
+  .cursor { width:12px; height:12px; background:var(--bright); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9999; transition:transform 0.15s ease; mix-blend-mode:screen; }
+  .cursor-ring { width:36px; height:36px; border:1.5px solid var(--soft); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9998; transition:transform 0.35s ease,width 0.3s,height 0.3s; opacity:0.5; }
+
+  /* ── NAV ── */
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:22px 60px; display:flex; align-items:center; justify-content:space-between; background:linear-gradient(to bottom,rgba(26,22,48,0.98) 0%,transparent 100%); backdrop-filter:blur(8px); }
+  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .nav-slash { display:flex; gap:3px; align-items:center; }
+  .nav-slash span { display:block; width:5px; height:28px; border-radius:3px; transform:skewX(-12deg); }
+  .nav-slash span:nth-child(1){ background:var(--mid); }
+  .nav-slash span:nth-child(2){ background:var(--bright); }
+  .nav-slash span:nth-child(3){ background:var(--soft); width:3px; }
+  .nav-brand { font-family:'Syne',sans-serif; font-weight:800; font-size:18px; color:var(--white); letter-spacing:1px; }
+  .nav-brand span { color:var(--soft); font-weight:400; }
+  .nav-links { display:flex; gap:36px; list-style:none; }
+  .nav-links a { color:var(--soft); text-decoration:none; font-size:14px; letter-spacing:0.5px; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--white); }
+  .nav-cta { background:var(--mid); color:var(--white) !important; padding:10px 24px; border-radius:100px; font-weight:500 !important; transition:background 0.2s !important; }
+  .nav-cta:hover { background:var(--bright) !important; }
+
+  /* ── HERO ── */
+  .hero { min-height:100vh; display:flex; align-items:center; padding:120px 60px 80px; position:relative; overflow:hidden; }
+  .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 60% 70% at 80% 50%,rgba(83,74,183,0.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(127,119,221,0.10) 0%,transparent 60%); }
+  .hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(83,74,183,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(83,74,183,0.07) 1px,transparent 1px); background-size:60px 60px; }
+  .orb { position:absolute; border-radius:50%; filter:blur(60px); pointer-events:none; }
+  .orb1 { width:500px; height:500px; background:rgba(83,74,183,0.15); right:-100px; top:50%; transform:translateY(-50%); }
+  .orb2 { width:300px; height:300px; background:rgba(127,119,221,0.10); left:10%; bottom:10%; }
+  .hero-content { position:relative; z-index:2; max-width:720px; }
+  .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(83,74,183,0.2); border:1px solid rgba(127,119,221,0.3); padding:8px 18px; border-radius:100px; font-size:12px; letter-spacing:2px; color:var(--soft); margin-bottom:36px; text-transform:uppercase; animation:fadeUp 0.8s ease both; }
+  .hero-badge-dot { width:6px; height:6px; background:var(--bright); border-radius:50%; animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+  h1 { font-family:'Syne',sans-serif; font-size:clamp(52px,7vw,88px); font-weight:800; line-height:1.0; letter-spacing:-2px; margin-bottom:28px; animation:fadeUp 0.8s 0.1s ease both; }
+  h1 .line2 { color:var(--soft); }
+  h1 .line3 { color:var(--bright); }
+  .hero-sub { font-size:18px; color:rgba(175,169,236,0.8); line-height:1.7; max-width:520px; margin-bottom:48px; font-weight:300; animation:fadeUp 0.8s 0.2s ease both; }
+  .hero-btns { display:flex; gap:16px; flex-wrap:wrap; animation:fadeUp 0.8s 0.3s ease both; }
+  .btn-primary { background:var(--mid); color:var(--white); padding:16px 36px; border-radius:100px; font-size:15px; font-weight:500; text-decoration:none; transition:background 0.2s,transform 0.2s; font-family:'DM Sans',sans-serif; }
+  .btn-primary:hover { background:var(--bright); transform:translateY(-2px); }
+  .btn-outline { border:1.5px solid rgba(127,119,221,0.4); color:var(--soft); padding:16px 36px; border-radius:100px; font-size:15px; text-decoration:none; transition:border-color 0.2s,color 0.2s,transform 0.2s; font-family:'DM Sans',sans-serif; }
+  .btn-outline:hover { border-color:var(--bright); color:var(--white); transform:translateY(-2px); }
+
+  /* ── EMAIL HIGHLIGHT BANNER ── */
+  .email-banner { background:rgba(83,74,183,0.15); border-top:1px solid rgba(127,119,221,0.2); border-bottom:1px solid rgba(127,119,221,0.2); padding:18px 60px; display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; }
+  .email-banner-label { font-size:13px; color:var(--soft); letter-spacing:1px; }
+  .email-pill { display:inline-flex; align-items:center; gap:8px; background:var(--darker); border:1px solid rgba(127,119,221,0.35); padding:10px 22px; border-radius:100px; text-decoration:none; transition:border-color 0.2s,transform 0.2s; }
+  .email-pill:hover { border-color:var(--bright); transform:translateY(-2px); }
+  .email-pill-icon { width:8px; height:8px; background:var(--bright); border-radius:50%; animation:pulse 2s infinite; }
+  .email-pill span { font-family:'Syne',sans-serif; font-weight:700; font-size:14px; color:var(--white); letter-spacing:0.5px; }
+
+  /* ── STATS ── */
+  .stats { background:var(--card-bg); border-top:1px solid rgba(127,119,221,0.15); border-bottom:1px solid rgba(127,119,221,0.15); padding:40px 60px; display:flex; justify-content:space-around; flex-wrap:wrap; gap:32px; }
+  .stat { text-align:center; }
+  .stat-num { font-family:'Syne',sans-serif; font-size:42px; font-weight:800; color:var(--white); line-height:1; }
+  .stat-num span { color:var(--bright); }
+  .stat-label { font-size:13px; color:var(--soft); margin-top:6px; letter-spacing:1px; text-transform:uppercase; }
+
+  /* ── SECTIONS ── */
+  section { padding:100px 60px; }
+  .section-tag { font-size:11px; letter-spacing:3px; color:var(--bright); text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:12px; }
+  .section-tag::before { content:''; width:30px; height:1px; background:var(--bright); display:block; }
+  .section-title { font-family:'Syne',sans-serif; font-size:clamp(36px,4vw,52px); font-weight:800; line-height:1.1; margin-bottom:16px; letter-spacing:-1px; }
+  .section-sub { font-size:16px; color:rgba(175,169,236,0.7); max-width:500px; line-height:1.7; font-weight:300; margin-bottom:64px; }
+
+  /* ── SERVICES ── */
+  .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+  .service-card { background:var(--card-bg); border:1px solid rgba(127,119,221,0.12); border-radius:20px; padding:36px; position:relative; overflow:hidden; transition:border-color 0.3s,transform 0.3s; cursor:default; }
+  .service-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(83,74,183,0.08) 0%,transparent 60%); opacity:0; transition:opacity 0.3s; }
+  .service-card:hover { border-color:rgba(127,119,221,0.4); transform:translateY(-4px); }
+  .service-card:hover::before { opacity:1; }
+  .service-icon { width:52px; height:52px; background:rgba(83,74,183,0.2); border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:24px; font-size:22px; }
+  .service-card h3 { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:12px; color:var(--white); }
+  .service-card p { font-size:14px; color:rgba(175,169,236,0.7); line-height:1.7; font-weight:300; }
+  .service-num { position:absolute; top:28px; right:28px; font-family:'Syne',sans-serif; font-size:11px; color:rgba(127,119,221,0.3); letter-spacing:2px; }
+
+  /* ── WHY ── */
+  .why-section { background:var(--card-bg); margin:0; padding:100px 60px; }
+  .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+  .why-visual { position:relative; height:420px; }
+  .why-box { position:absolute; border:1px solid rgba(127,119,221,0.2); border-radius:16px; padding:24px; background:rgba(26,22,48,0.8); }
+  .why-box-main { width:300px; height:200px; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:var(--darker); border-color:rgba(127,119,221,0.35); }
+  .why-box-main .big-num { font-family:'Syne',sans-serif; font-size:64px; font-weight:800; color:var(--bright); line-height:1; }
+  .why-box-main p { font-size:13px; color:var(--soft); margin-top:8px; letter-spacing:1px; }
+  .why-box-tl { width:160px; top:20px; left:0; }
+  .why-box-br { width:160px; bottom:20px; right:0; }
+  .why-box-tr { width:140px; top:30px; right:10px; }
+  .why-box small { font-size:11px; color:var(--bright); text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:6px; }
+  .why-box strong { font-family:'Syne',sans-serif; font-size:16px; color:var(--white); }
+  .why-points { display:flex; flex-direction:column; gap:28px; }
+  .why-point { display:flex; gap:20px; align-items:flex-start; }
+  .why-point-icon { width:44px; height:44px; min-width:44px; background:rgba(83,74,183,0.15); border:1px solid rgba(127,119,221,0.2); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+  .why-point h4 { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; margin-bottom:6px; }
+  .why-point p { font-size:14px; color:rgba(175,169,236,0.65); line-height:1.6; font-weight:300; }
+
+  /* ── PROCESS ── */
+  .process-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:0; position:relative; margin-top:60px; }
+  .process-steps::before { content:''; position:absolute; top:32px; left:10%; right:10%; height:1px; background:linear-gradient(to right,transparent,rgba(127,119,221,0.3) 20%,rgba(127,119,221,0.3) 80%,transparent); }
+  .process-step { text-align:center; padding:0 20px; position:relative; }
+  .step-circle { width:64px; height:64px; border-radius:50%; background:var(--card-bg); border:1.5px solid rgba(127,119,221,0.3); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; font-family:'Syne',sans-serif; font-size:18px; font-weight:800; color:var(--bright); position:relative; z-index:1; transition:background 0.3s,border-color 0.3s; }
+  .process-step:hover .step-circle { background:var(--mid); border-color:var(--mid); color:var(--white); }
+  .process-step h4 { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; margin-bottom:8px; }
+  .process-step p { font-size:13px; color:rgba(175,169,236,0.6); line-height:1.6; }
+
+  /* ── PRICING ── */
+  .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:60px; }
+  .pricing-card { background:var(--card-bg); border:1px solid rgba(127,119,221,0.12); border-radius:24px; padding:40px 32px; position:relative; transition:transform 0.3s,border-color 0.3s; }
+  .pricing-card:hover { transform:translateY(-6px); border-color:rgba(127,119,221,0.3); }
+  .pricing-card.featured { border-color:var(--mid); background:linear-gradient(145deg,rgba(83,74,183,0.2) 0%,var(--card-bg) 100%); }
+  .featured-badge { position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:var(--mid); color:var(--white); padding:5px 18px; border-radius:100px; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; }
+  .pricing-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--soft); margin-bottom:16px; }
+  .pricing-price { font-family:'Syne',sans-serif; font-size:44px; font-weight:800; color:var(--white); line-height:1; margin-bottom:6px; }
+  .pricing-price span { font-size:18px; color:var(--soft); font-weight:400; }
+  .pricing-period { font-size:13px; color:var(--gray); margin-bottom:32px; }
+  .pricing-features { list-style:none; margin-bottom:36px; }
+  .pricing-features li { font-size:14px; color:rgba(175,169,236,0.75); padding:10px 0; border-bottom:1px solid rgba(127,119,221,0.08); display:flex; align-items:center; gap:10px; font-weight:300; }
+  .pricing-features li::before { content:'✓'; color:var(--bright); font-weight:700; font-size:12px; min-width:16px; }
+  .pricing-btn { display:block; text-align:center; padding:14px; border-radius:100px; font-size:14px; font-weight:500; text-decoration:none; transition:all 0.2s; font-family:'DM Sans',sans-serif; }
+  .pricing-btn-outline { border:1.5px solid rgba(127,119,221,0.3); color:var(--soft); }
+  .pricing-btn-outline:hover { border-color:var(--bright); color:var(--white); }
+  .pricing-btn-solid { background:var(--mid); color:var(--white); }
+  .pricing-btn-solid:hover { background:var(--bright); }
+
+  /* ── CONTACT ── */
+  .contact-section { background:var(--card-bg); padding:100px 60px; }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+  .contact-info h2 { font-family:'Syne',sans-serif; font-size:clamp(32px,4vw,48px); font-weight:800; line-height:1.1; margin-bottom:20px; letter-spacing:-1px; }
+  .contact-info p { color:rgba(175,169,236,0.7); font-size:15px; line-height:1.7; margin-bottom:40px; font-weight:300; }
+  .contact-details { display:flex; flex-direction:column; gap:20px; }
+  .contact-item { display:flex; align-items:center; gap:16px; }
+  .contact-icon { width:44px; height:44px; min-width:44px; background:rgba(83,74,183,0.15); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+  .contact-item strong { font-size:13px; color:var(--soft); display:block; margin-bottom:2px; letter-spacing:0.5px; }
+  .contact-item a, .contact-item span { font-size:15px; color:var(--white); text-decoration:none; transition:color 0.2s; }
+  .contact-item a:hover { color:var(--bright); }
+
+  /* ── EMAIL CTA CARD ── */
+  .email-cta-card { background:var(--darker); border:1px solid rgba(127,119,221,0.3); border-radius:16px; padding:28px 32px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-top:32px; }
+  .email-cta-card p { font-size:14px; color:var(--soft); line-height:1.6; }
+  .email-cta-card p strong { color:var(--white); font-family:'Syne',sans-serif; display:block; margin-bottom:4px; font-size:15px; }
+  .email-direct-btn { display:inline-flex; align-items:center; gap:8px; background:var(--mid); color:var(--white); padding:12px 24px; border-radius:100px; text-decoration:none; font-size:14px; font-weight:500; white-space:nowrap; transition:background 0.2s,transform 0.2s; }
+  .email-direct-btn:hover { background:var(--bright); transform:translateY(-2px); }
+
+  /* ── FORM ── */
+  .contact-form { display:flex; flex-direction:column; gap:16px; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .form-group { display:flex; flex-direction:column; gap:8px; }
+  .form-group label { font-size:12px; color:var(--soft); letter-spacing:1px; text-transform:uppercase; }
+  .form-group input,.form-group textarea,.form-group select { background:rgba(26,22,48,0.8); border:1px solid rgba(127,119,221,0.2); border-radius:12px; padding:14px 18px; color:var(--white); font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.2s; appearance:none; }
+  .form-group input:focus,.form-group textarea:focus,.form-group select:focus { border-color:var(--bright); }
+  .form-group textarea { resize:vertical; min-height:120px; }
+  .form-group select option { background:var(--deep); }
+  .form-submit { background:var(--mid); color:var(--white); border:none; padding:16px 36px; border-radius:100px; font-size:15px; font-weight:500; font-family:'DM Sans',sans-serif; cursor:pointer; transition:background 0.2s,transform 0.2s; align-self:flex-start; }
+  .form-submit:hover { background:var(--bright); transform:translateY(-2px); }
+  .form-note { font-size:12px; color:rgba(175,169,236,0.5); margin-top:4px; }
+
+  /* ── FOOTER ── */
+  footer { padding:60px 60px 40px; border-top:1px solid rgba(127,119,221,0.12); }
+  .footer-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:48px; flex-wrap:wrap; gap:40px; }
+  .footer-brand p { font-size:13px; color:rgba(175,169,236,0.5); max-width:260px; line-height:1.7; margin-top:16px; font-weight:300; }
+  .footer-email-box { margin-top:20px; display:flex; align-items:center; gap:10px; background:rgba(83,74,183,0.1); border:1px solid rgba(127,119,221,0.2); border-radius:10px; padding:12px 16px; }
+  .footer-email-box span { font-size:16px; }
+  .footer-email-box a { font-size:13px; color:var(--soft); text-decoration:none; transition:color 0.2s; font-weight:500; }
+  .footer-email-box a:hover { color:var(--white); }
+  .footer-links h5 { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--soft); margin-bottom:20px; }
+  .footer-links ul { list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .footer-links a { font-size:14px; color:rgba(175,169,236,0.5); text-decoration:none; transition:color 0.2s; font-weight:300; }
+  .footer-links a:hover { color:var(--white); }
+  .footer-bottom { display:flex; justify-content:space-between; align-items:center; padding-top:28px; border-top:1px solid rgba(127,119,221,0.1); flex-wrap:wrap; gap:16px; }
+  .footer-bottom p { font-size:13px; color:rgba(175,169,236,0.35); }
+  .social-links { display:flex; gap:12px; }
+  .social-link { width:36px; height:36px; border:1px solid rgba(127,119,221,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; text-decoration:none; color:var(--soft); transition:border-color 0.2s,color 0.2s; }
+  .social-link:hover { border-color:var(--bright); color:var(--white); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  @media(max-width:900px){
+    nav{padding:18px 24px;}
+    .nav-links{display:none;}
+    section,.why-section,.contact-section{padding:70px 24px;}
+    .hero{padding:100px 24px 60px;}
+    .stats,.email-banner{padding:32px 24px;}
+    .why-grid,.contact-grid{grid-template-columns:1fr;gap:48px;}
+    .why-visual{height:280px;}
+    .pricing-grid{grid-template-columns:1fr;max-width:400px;margin:60px auto 0;}
+    .form-row{grid-template-columns:1fr;}
+    footer{padding:48px 24px 32px;}
+    .footer-top{flex-direction:column;}
+    .process-steps::before{display:none;}
+    .process-steps{grid-template-columns:1fr 1fr;gap:32px;}
+    .email-cta-card{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-slash"><span></span><span></span><span></span></div>
+    <div class="nav-brand"><span>THE </span>CYBRIX</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="mailto:thecybrix.team@gmail.com?subject=Free Audit Request — THE CYBRIX" class="nav-cta">Get Free Audit</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Now accepting new clients — Ludhiana &amp; Pan India
+    </div>
+    <h1>We Grow<br><span class="line2">Your Brand</span><br><span class="line3">Digitally.</span></h1>
+    <p class="hero-sub">THE CYBRIX is a results-driven digital marketing agency based in Ludhiana, Punjab. We help local businesses dominate online — through social media, SEO, and paid ads.</p>
+    <div class="hero-btns">
+      <a href="mailto:thecybrix.team@gmail.com?subject=Free Audit Request&body=Hi THE CYBRIX Team,%0D%0A%0D%0AI would like to request a free audit for my business.%0D%0A%0D%0ABusiness Name: %0D%0APhone: %0D%0AService Needed: " class="btn-primary">Get Free Audit →</a>
+      <a href="#services" class="btn-outline">See Our Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL BANNER -->
+<div class="email-banner">
+  <span class="email-banner-label">📧 REACH US DIRECTLY —</span>
+  <a href="mailto:thecybrix.team@gmail.com?subject=Hello THE CYBRIX" class="email-pill">
+    <div class="email-pill-icon"></div>
+    <span>thecybrix.team@gmail.com</span>
+  </a>
+  <span class="email-banner-label">— We reply within 2 hours</span>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num">100<span>%</span></div><div class="stat-label">Results Focused</div></div>
+  <div class="stat"><div class="stat-num">4<span>+</span></div><div class="stat-label">Expert Members</div></div>
+  <div class="stat"><div class="stat-num">3<span>x</span></div><div class="stat-label">Avg. Engagement Growth</div></div>
+  <div class="stat"><div class="stat-num">₹0</div><div class="stat-label">Free Audit Cost</div></div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag">What We Do</div>
+  <h2 class="section-title">Services Built<br>for Real Growth</h2>
+  <p class="section-sub">Every service we offer is designed to bring measurable results — not just vanity metrics.</p>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-num">01</div><div class="service-icon">📱</div><h3>Social Media Management</h3><p>We manage your Instagram, Facebook &amp; LinkedIn — content creation, scheduling, engagement, and monthly growth reports.</p></div>
+    <div class="service-card"><div class="service-num">02</div><div class="service-icon">🔍</div><h3>SEO &amp; Google Rankings</h3><p>We optimise your website to rank on Google. Keyword research, on-page SEO, backlinks, and local SEO for Ludhiana.</p></div>
+    <div class="service-card"><div class="service-num">03</div><div class="service-icon">📢</div><h3>Google &amp; Meta Ads</h3><p>Targeted ad campaigns on Google, Facebook &amp; Instagram that convert visitors into paying customers.</p></div>
+    <div class="service-card"><div class="service-num">04</div><div class="service-icon">✍️</div><h3>Content Creation</h3><p>Eye-catching graphics, captions, reels scripts, and blog posts — all tailored to your brand voice and audience.</p></div>
+    <div class="service-card"><div class="service-num">05</div><div class="service-icon">🌐</div><h3>Website Design</h3><p>Clean, mobile-friendly websites that load fast and convert visitors. Built with your brand identity at the core.</p></div>
+    <div class="service-card"><div class="service-num">06</div><div class="service-icon">📊</div><h3>Analytics &amp; Reporting</h3><p>Monthly performance reports with clear data — reach, clicks, leads, ROI. You always know what's working.</p></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<div class="why-section" id="why">
+  <div class="section-tag">Why Choose Us</div>
+  <h2 class="section-title" style="margin-bottom:60px;">Why Businesses<br>Trust The Cybrix</h2>
+  <div class="why-grid">
+    <div class="why-visual">
+      <div class="why-box why-box-main"><div class="big-num">IT</div><p>Powered Agency</p></div>
+      <div class="why-box why-box-tl"><small>Based in</small><strong>Ludhiana, Punjab</strong></div>
+      <div class="why-box why-box-tr"><small>Clients</small><strong>Pan India</strong></div>
+      <div class="why-box why-box-br"><small>Team</small><strong>4 Specialists</strong></div>
+    </div>
+    <div class="why-points">
+      <div class="why-point"><div class="why-point-icon">🎯</div><div><h4>Local Market Expertise</h4><p>We understand Punjab's business landscape. Local insight + digital skills = better results for your business.</p></div></div>
+      <div class="why-point"><div class="why-point-icon">💻</div><div><h4>IT-Educated Team</h4><p>Our team holds IT degrees — we understand data, analytics, and tools at a deeper level than typical agencies.</p></div></div>
+      <div class="why-point"><div class="why-point-icon">📈</div><div><h4>Results You Can See</h4><p>Every month you receive a clear report showing follower growth, website traffic, leads generated, and ad ROI.</p></div></div>
+      <div class="why-point"><div class="why-point-icon">🤝</div><div><h4>Free Audit Before Commitment</h4><p>We audit your entire online presence for free — social media, website, SEO, ads. No obligation required.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-tag">How It Works</div>
+  <h2 class="section-title">Our Simple<br>4-Step Process</h2>
+  <p class="section-sub">From first contact to measurable results — here's exactly how we work.</p>
+  <div class="process-steps">
+    <div class="process-step"><div class="step-circle">01</div><h4>Free Audit</h4><p>We analyse your social media, website, SEO, and competitors — completely free.</p></div>
+    <div class="process-step"><div class="step-circle">02</div><h4>Strategy Call</h4><p>We present findings and recommend a custom plan tailored to your business goals.</p></div>
+    <div class="process-step"><div class="step-circle">03</div><h4>We Execute</h4><p>Our team creates content, runs ads, fixes SEO, and grows your online presence.</p></div>
+    <div class="process-step"><div class="step-circle">04</div><h4>Monthly Reports</h4><p>Every month you get a detailed report with clear metrics — growth, leads, ROI.</p></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="background:var(--card-bg);margin:0;padding:100px 60px;">
+  <div class="section-tag">Pricing</div>
+  <h2 class="section-title">Simple, Transparent<br>Pricing</h2>
+  <p class="section-sub">No hidden fees. No lock-ins. Start with a free audit. Email us to get started.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-name">Starter</div>
+      <div class="pricing-price">₹5,000 <span>/mo</span></div>
+      <div class="pricing-period">Best for: Small local businesses</div>
+      <ul class="pricing-features">
+        <li>2 Social Media Platforms</li>
+        <li>12 Posts per Month</li>
+        <li>Basic SEO Audit</li>
+        <li>Monthly Performance Report</li>
+        <li>WhatsApp Support</li>
+      </ul>
+      <a href="mailto:thecybrix.team@gmail.com?subject=Starter Plan Enquiry — THE CYBRIX&body=Hi THE CYBRIX Team,%0D%0A%0D%0AI am interested in the Starter Plan (₹5,000/month).%0D%0A%0D%0ABusiness Name: %0D%0APhone: %0D%0ACity: " class="pricing-btn pricing-btn-outline">Get Started →</a>
+    </div>
+    <div class="pricing-card featured">
+      <div class="featured-badge">Most Popular</div>
+      <div class="pricing-name">Growth</div>
+      <div class="pricing-price">₹12,000 <span>/mo</span></div>
+      <div class="pricing-period">Best for: Growing businesses</div>
+      <ul class="pricing-features">
+        <li>3 Social Media Platforms</li>
+        <li>20 Posts + 4 Reels/Month</li>
+        <li>Full SEO Optimisation</li>
+        <li>Google or Meta Ads included</li>
+        <li>Weekly Report + Call</li>
+        <li>Priority Support</li>
+      </ul>
+      <a href="mailto:thecybrix.team@gmail.com?subject=Growth Plan Enquiry — THE CYBRIX&body=Hi THE CYBRIX Team,%0D%0A%0D%0AI am interested in the Growth Plan (₹12,000/month).%0D%0A%0D%0ABusiness Name: %0D%0APhone: %0D%0ACity: " class="pricing-btn pricing-btn-solid">Get Started →</a>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-name">Premium</div>
+      <div class="pricing-price">₹22,000 <span>/mo</span></div>
+      <div class="pricing-period">Best for: Established businesses</div>
+      <ul class="pricing-features">
+        <li>All Platforms Managed</li>
+        <li>Unlimited Posts + Reels</li>
+        <li>Advanced SEO + Blog Content</li>
+        <li>Google + Meta Ads included</li>
+        <li>Website Maintenance</li>
+        <li>Dedicated Account Manager</li>
+      </ul>
+      <a href="mailto:thecybrix.team@gmail.com?subject=Premium Plan Enquiry — THE CYBRIX&body=Hi THE CYBRIX Team,%0D%0A%0D%0AI am interested in the Premium Plan (₹22,000/month).%0D%0A%0D%0ABusiness Name: %0D%0APhone: %0D%0ACity: " class="pricing-btn pricing-btn-outline">Get Started →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="section-tag">Contact Us</div>
+      <h2>Let's Grow Your<br>Business Together</h2>
+      <p>Fill the form and we'll get back to you within 2 hours. Or email us directly — we love talking to local businesses.</p>
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <strong>Email Us Directly</strong>
+            <a href="mailto:thecybrix.team@gmail.com">thecybrix.team@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div><strong>WhatsApp</strong><span>DM us "AUDIT" to start</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div><strong>Location</strong><span>Ludhiana, Punjab — Serving Pan India</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div><strong>Response Time</strong><span>Within 2 hours on weekdays</span></div>
+        </div>
+      </div>
+      <!-- Direct email CTA card -->
+      <div class="email-cta-card">
+        <p><strong>Prefer direct email?</strong>Click the button to open a pre-filled email — we respond within 2 hours.</p>
+        <a href="mailto:thecybrix.team@gmail.com?subject=Free Audit Request — THE CYBRIX&body=Hi THE CYBRIX Team,%0D%0A%0D%0AI would like to request a free digital audit for my business.%0D%0A%0D%0ABusiness Name: %0D%0APhone Number: %0D%0ACity: %0D%0AService Needed: %0D%0A%0D%0AThank you!" class="email-direct-btn">📧 Email Us Now</a>
+      </div>
+    </div>
+
+    <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="fname" placeholder="e.g. Rajinder Singh" required/>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="fphone" placeholder="e.g. 98765 43210" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Business Name</label>
+        <input type="text" id="fbusiness" placeholder="e.g. Singh Electronics, Ludhiana" required/>
+      </div>
+      <div class="form-group">
+        <label>Your Email</label>
+        <input type="email" id="femail" placeholder="your@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Service Interested In</label>
+        <select id="fservice">
+          <option value="">Select a service...</option>
+          <option>Social Media Management</option>
+          <option>SEO &amp; Google Rankings</option>
+          <option>Google &amp; Meta Ads</option>
+          <option>Content Creation</option>
+          <option>Website Design</option>
+          <option>Full Package (All Services)</option>
+          <option>Free Audit First</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="fmessage" placeholder="Tell us about your business and what you want to achieve..."></textarea>
+      </div>
+      <p class="form-note">Clicking "Send" will open your email app with a pre-filled message to thecybrix.team@gmail.com</p>
+      <button type="submit" class="form-submit">Send Message →</button>
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">
+        <div class="nav-slash"><span></span><span></span><span></span></div>
+        <div class="nav-brand"><span>THE </span>CYBRIX</div>
+      </a>
+      <p>A digital marketing agency built to help local businesses grow online. Based in Ludhiana, Punjab — serving all of India.</p>
+      <div class="footer-email-box">
+        <span>📧</span>
+        <a href="mailto:thecybrix.team@gmail.com">thecybrix.team@gmail.com</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#services">Social Media</a></li>
+        <li><a href="#services">SEO</a></li>
+        <li><a href="#services">Google Ads</a></li>
+        <li><a href="#services">Content</a></li>
+        <li><a href="#services">Website Design</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#why">About Us</a></li>
+        <li><a href="#process">Our Process</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="mailto:thecybrix.team@gmail.com">thecybrix.team@gmail.com</a></li>
+        <li><a href="#">Ludhiana, Punjab</a></li>
+        <li><a href="#">@thecybrix</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 The Cybrix · Ludhiana, Punjab, India · <a href="mailto:thecybrix.team@gmail.com" style="color:rgba(175,169,236,0.35);text-decoration:none;">thecybrix.team@gmail.com</a></p>
+    <div class="social-links">
+      <a href="#" class="social-link">in</a>
+      <a href="#" class="social-link">ig</a>
+      <a href="#" class="social-link">fb</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    cursor.style.transform=`translate(${mx-6}px,${my-6}px)`;
+  });
+  function animateRing(){
+    rx+=(mx-rx-18)*0.12; ry+=(my-ry-18)*0.12;
+    ring.style.transform=`translate(${rx}px,${ry}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ ring.style.width='52px'; ring.style.height='52px'; });
+    el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; });
+  });
+
+  function handleSubmit(e){
+    e.preventDefault();
+    const name     = document.getElementById('fname').value;
+    const phone    = document.getElementById('fphone').value;
+    const business = document.getElementById('fbusiness').value;
+    const email    = document.getElementById('femail').value;
+    const service  = document.getElementById('fservice').value;
+    const message  = document.getElementById('fmessage').value;
+    const subject  = encodeURIComponent(`Enquiry from ${name} — THE CYBRIX Website`);
+    const body     = encodeURIComponent(
+      `Hi THE CYBRIX Team,\n\nI found you on your website and I'm interested in your services.\n\n` +
+      `Name: ${name}\nPhone: ${phone}\nBusiness: ${business}\nEmail: ${email}\n` +
+      `Service Interested In: ${service || 'Not specified'}\n\nMessage:\n${message || 'No additional message.'}\n\nThank you!`
+    );
+    window.location.href = `mailto:thecybrix.team@gmail.com?subject=${subject}&body=${body}`;
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = 'Opening Email App... ✓';
+    btn.style.background = '#1D9E75';
+    setTimeout(()=>{ btn.textContent='Send Message →'; btn.style.background=''; },3000);
+  }
+
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.style.animation='fadeUp 0.7s ease both';
+    });
+  },{threshold:0.1});
+  document.querySelectorAll('.service-card,.why-point,.process-step,.pricing-card').forEach(el=>{
+    el.style.opacity='0'; observer.observe(el);
+  });
+</script>
+</body>
+</html>
